@@ -21,7 +21,7 @@
                 <td th:text="${pizza.description}"></td>
                 <td th:text="|${pizza.price}€|"></td>
                 <td>
-
+                    <a th:href="@{/pizza/{id}(id=${pizza.id})}">Click for details</a>
                 </td>
             </tr>
             </tbody>
