@@ -3,6 +3,7 @@ package org.lessons.springlamiapizzeriacrud.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pizza")
@@ -18,6 +19,7 @@ public class Pizza {
     private String image;
     @Column(scale = 2)
     private BigDecimal price;
+    private LocalDateTime createdAt;
 
     public Integer getId() {
         return id;
@@ -57,5 +59,13 @@ public class Pizza {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
