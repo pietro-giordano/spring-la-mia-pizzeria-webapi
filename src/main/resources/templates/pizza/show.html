@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="fragments/resources :: head"></th:block>
-    <title>Title</title>
+    <title th:text="${pizza.name}"></title>
 </head>
 <body>
     <div class="container text-center">
