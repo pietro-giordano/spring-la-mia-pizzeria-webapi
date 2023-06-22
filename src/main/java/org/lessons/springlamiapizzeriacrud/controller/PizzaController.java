@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/pizza")
@@ -27,18 +28,16 @@ public class PizzaController {
 
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable Integer id) {
-        Pizza showPizza = null;
-        try {
-            List<Pizza> pizza = repository.findAll();
-            for(Pizza p : pizza) {
-                if(p.getId() == id){
-                    showPizza = p;
-                }
-            }
-        }  catch(IndexOutOfBoundsException e) {
+        // recupero pizza con id corrispondente
+        Optional<Pizza> pizzaId = repository.findById(id);
+        // se presente la recupero e la passo come attributo col model
+        if (pizzaId.isPresent()) {
+            Pizza pizzaShow = pizzaId.get();
+            model.addAttribute("pizza", pizzaShow);
+            return "/pizza/show";
+        // altrimenti redirect alla index
+        } else {
             return "redirect:/pizza";
         }
-        model.addAttribute("pizza", showPizza);
-        return "/pizza/show";
     }
 }
