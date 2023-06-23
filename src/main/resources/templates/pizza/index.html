@@ -8,6 +8,19 @@
         <div class="row">
             <h1 class="text-danger my-3">Benvenuto in pizzeria tal dei tali</h1>
 
+            <!-- input di ricerca -->
+            <div class="d-flex justify-content-center">
+                <form th:action="@{/pizza}" method="GET" class="w-50 mb-3">
+                    <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Cerca pizza per nome..."
+                               name="keyword" th:value="${search}">
+                        <button class="btn btn-secondary" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Se lista pizze è vuota mostra questo -->
             <table th:if="${pizzaList.size() > 0}" class="table table-success table-striped">
                 <thead>

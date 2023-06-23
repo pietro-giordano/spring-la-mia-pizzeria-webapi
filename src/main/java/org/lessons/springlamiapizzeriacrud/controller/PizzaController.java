@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,9 +23,19 @@ public class PizzaController {
     private PizzaRepository repository;
 
     @GetMapping
-    public String index(Model model) {
-        List<Pizza> pizza = repository.findAll();
+    public String index(Model model, @RequestParam(name = "keyword", required = false) String search) {
+        // inizializzo pizza
+        List<Pizza> pizza;
+        // se non ho param prendo tutto
+        if(search == null || search.isBlank()) {
+            pizza = repository.findAll();
+        } else {
+            // altrimenti query personalizzata
+            pizza = repository.findByNameContainingIgnoreCase(search);
+        }
         model.addAttribute("pizzaList", pizza);
+        // mando valore di search per occupare campo di input search
+        model.addAttribute("search", search == null ? "" : search);
         return "/pizza/index";
     }
 
