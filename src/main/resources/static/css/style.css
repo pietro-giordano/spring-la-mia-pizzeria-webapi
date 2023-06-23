@@ -1,0 +1,5 @@
+body {
+    background-image: url("../img/home-colorata.jpg");
+    background-size: contain;
+    height: 100vh;
+}
