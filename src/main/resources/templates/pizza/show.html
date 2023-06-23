@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="fragments/resources :: head"></th:block>
-    <title th:text="${pizza.name}"></title>
+    <th:block th:replace="~{/fragments/resources :: head(title=${pizza.name})}"></th:block>
 </head>
 <body>
     <div class="container text-center">
