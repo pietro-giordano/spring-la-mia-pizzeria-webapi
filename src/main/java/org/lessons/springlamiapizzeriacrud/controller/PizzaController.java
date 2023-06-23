@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,6 +19,7 @@ public class PizzaController {
     @Autowired
     private PizzaRepository repository;
 
+    // INDEX
     @GetMapping
     public String index(Model model, @RequestParam(name = "keyword", required = false) String search) {
         // inizializzo pizza
@@ -39,6 +37,7 @@ public class PizzaController {
         return "/pizza/index";
     }
 
+    // SHOW
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable Integer id) {
         // recupero pizza con id corrispondente
@@ -52,5 +51,12 @@ public class PizzaController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza inesistente");
         }
+    }
+
+    // DELETE
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        repository.deleteById(id);
+        return "redirect:/pizza";
     }
 }
