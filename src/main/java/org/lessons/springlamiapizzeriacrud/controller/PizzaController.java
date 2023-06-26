@@ -67,7 +67,7 @@ public class PizzaController {
 
     // STORE
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, Model model, BindingResult bindingResult) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         // controllo che il nome sia univoco
         if (!isUniqueName(formPizza)) {
             // aggiungo errore personalizzato in bindingResult
