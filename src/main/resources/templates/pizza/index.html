@@ -8,9 +8,13 @@
         <div class="row">
             <h1 class="text-danger my-3">Benvenuto in pizzeria tal dei tali</h1>
 
-            <!-- input di ricerca -->
-            <div class="d-flex justify-content-center">
-                <form th:action="@{/pizza}" method="GET" class="w-50 mb-3">
+            <div class="d-flex justify-content-center mb-3">
+                <a th:href="@{/pizza/create}" class="btn btn-success me-3">
+                    Aggiungi pizza
+                </a>
+
+                <!-- input di ricerca -->
+                <form th:action="@{/pizza}" method="GET" class="w-50">
                     <div class="input-group">
                         <input type="search" class="form-control" placeholder="Cerca pizza per nome..."
                                name="keyword" th:value="${search}">

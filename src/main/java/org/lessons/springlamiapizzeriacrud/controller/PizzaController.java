@@ -1,14 +1,17 @@
 package org.lessons.springlamiapizzeriacrud.controller;
 
+import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,10 +56,39 @@ public class PizzaController {
         }
     }
 
+    // CREATE
+    @GetMapping("/create")
+    public String create(Model model) {
+        // passo l'attributo pizza che è un oggetto Pizza vuoto
+        model.addAttribute("pizza", new Pizza());
+        return "/pizza/create";
+    }
+
+    // STORE
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, Model model, BindingResult bindingResult) {
+        // controllo se ci sono stati e nel caso rimando a form create
+        if (bindingResult.hasErrors()) {
+            return "/pizza/create";
+        }
+        // setto data e ora di creazione al momento di creazione stessa
+        formPizza.setCreatedAt(LocalDateTime.now());
+        // metodo save crea se non trova corrispondenza altrimenti fa update
+        repository.save(formPizza);
+        return "redirect:/pizza";
+    }
+
+
+    // UPDATE
+    @PutMapping("/update/{id}")
+    public String update(Model model, @PathVariable Integer id) {
+        return "/pizza/update";
+    }
+
     // DELETE
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         repository.deleteById(id);
-        return "redirect:/pizza";
+        return "redirect:/pizza";  // redirect dopo delete di oggetto
     }
 }
