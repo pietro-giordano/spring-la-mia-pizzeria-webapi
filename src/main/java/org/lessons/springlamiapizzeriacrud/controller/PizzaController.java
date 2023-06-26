@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -67,6 +68,11 @@ public class PizzaController {
     // STORE
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, Model model, BindingResult bindingResult) {
+        // controllo che il nome sia univoco
+        if (!isUniqueName(formPizza)) {
+            // aggiungo errore personalizzato in bindingResult
+            bindingResult.addError(new FieldError("pizza", "name", formPizza.getName(), false, null, null , "Nome già presente in database"));
+        }
         // controllo se ci sono stati e nel caso rimando a form create
         if (bindingResult.hasErrors()) {
             return "/pizza/create";
@@ -78,17 +84,24 @@ public class PizzaController {
         return "redirect:/pizza";
     }
 
+    // EDIT
+
 
     // UPDATE
-    @PutMapping("/update/{id}")
-    public String update(Model model, @PathVariable Integer id) {
-        return "/pizza/update";
-    }
+
 
     // DELETE
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         repository.deleteById(id);
         return "redirect:/pizza";  // redirect dopo delete di oggetto
+    }
+
+    //-------------------------------------------------
+
+    // metodo che verifica presenza in database di un nome di pizza già presente
+    private boolean isUniqueName(Pizza formPizza) {
+        Optional<Pizza> result = repository.findByName(formPizza.getName());
+        return result.isEmpty();
     }
 }

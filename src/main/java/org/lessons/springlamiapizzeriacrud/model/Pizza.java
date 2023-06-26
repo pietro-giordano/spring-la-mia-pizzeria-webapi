@@ -1,6 +1,9 @@
 package org.lessons.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,11 +16,15 @@ public class Pizza {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Il nome non può essere vuoto o nullo")
     @Column(nullable = false, unique = true)
     private String name;
+    @Lob
     private String description;
     private String image;
-    @Column(scale = 2)
+    @Min(value = 1, message = "Inserire prezzo positivo")
+    @NotBlank(message = "Il prezzo non può essere nullo")
+    @Column(nullable = false, scale = 2)
     private BigDecimal price;
     private LocalDateTime createdAt;
 
