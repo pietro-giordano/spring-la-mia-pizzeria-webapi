@@ -113,7 +113,9 @@ public class PizzaController {
     // DELETE
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        repository.deleteById(id);
+        // verifichiamo prima se la pizza è presente
+        Pizza pizza = getPizzaById(id);
+        repository.delete(pizza);
         return "redirect:/pizza";  // redirect dopo delete di oggetto
     }
 
