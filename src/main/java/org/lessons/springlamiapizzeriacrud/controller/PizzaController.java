@@ -56,7 +56,7 @@ public class PizzaController {
     public String create(Model model) {
         // passo l'attributo pizza che è un oggetto Pizza vuoto
         model.addAttribute("pizza", new Pizza());
-        return "/pizza/create";
+        return "/pizza/create_edit";
     }
 
     // STORE
@@ -67,9 +67,9 @@ public class PizzaController {
             // aggiungo errore personalizzato in bindingResult
             bindingResult.addError(new FieldError("pizza", "name", formPizza.getName(), false, null, null , "Nome già presente in database"));
         }
-        // controllo se ci sono stati e nel caso rimando a form create
+        // controllo se ci sono stati errori e nel caso rimando a form create
         if (bindingResult.hasErrors()) {
-            return "/pizza/create";
+            return "/pizza/create_edit";
         }
         // setto data e ora di creazione al momento di creazione stessa
         formPizza.setCreatedAt(LocalDateTime.now());
@@ -85,15 +85,27 @@ public class PizzaController {
         Pizza pizza = getPizzaById(id);
         // e lo passo tramite model
         model.addAttribute("pizza", pizza);
-        return "/pizza/edit";
+        return "/pizza/create_edit";
     }
 
     // UPDATE
     @PostMapping("/edit/{id}")
-    public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "/pizza/edit";
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
+        // recupero pizza pre modifica tramite id
+        Pizza pizza = getPizzaById(id);
+        // controllo che il nome o sia lo stesso di prima o che quello nuovo sia unico altrimenti...
+        if (!pizza.getName().equals(formPizza.getName()) && !isUniqueName(formPizza)) {
+            // ...aggiungo errore personalizzato in bindingResult
+            bindingResult.addError(new FieldError("pizza", "name", formPizza.getName(), false, null, null , "Nome già presente in database"));
         }
+        // controllo se ci sono stati errori e nel caso rimando a form create
+        if (bindingResult.hasErrors()) {
+            return "/pizza/create_edit";
+        }
+        // aggiungo dati che non modifichiamo nel form
+        formPizza.setId(pizza.getId());
+        formPizza.setCreatedAt(pizza.getCreatedAt());
+        // salvo le modifiche
         repository.save(formPizza);
         return "redirect:/pizza";
     }
