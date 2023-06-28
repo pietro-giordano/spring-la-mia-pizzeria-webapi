@@ -9,7 +9,7 @@
             <div class="container">
                   <h1 class="text-danger text-center my-3">Aggiungi pizza al menù</h1>
 
-                  <form th:action="@{/pizza/create}" th:object="${pizza}" id="pizza_form" method="POST" class="row">
+                  <form th:action="@{/pizza/create}" th:object="${pizza}" id="pizza_form" method="POST" enctype="multipart/form-data" class="row">
                         <div class="mb-3 col-6">
                               <label for="name" class="form-label bg-warning p-1 rounded">Nome pizza</label>
                               <input type="text" class="form-control" id="name" th:field="*{name}"
