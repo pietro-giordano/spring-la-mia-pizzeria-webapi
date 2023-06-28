@@ -1,6 +1,8 @@
 package org.lessons.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.lessons.springlamiapizzeriacrud.messages.Alert;
+import org.lessons.springlamiapizzeriacrud.messages.AlertType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,7 +64,7 @@ public class PizzaController {
 
     // STORE
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         // controllo che il nome sia univoco
         if (!isUniqueName(formPizza)) {
             // aggiungo errore personalizzato in bindingResult
@@ -75,6 +78,8 @@ public class PizzaController {
         formPizza.setCreatedAt(LocalDateTime.now());
         // metodo save crea se non trova corrispondenza altrimenti fa update
         repository.save(formPizza);
+        // aggiungo alert di corretto delete come flashAttribute
+        redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, formPizza.getName() + " creata correttamente."));
         return "redirect:/pizza";
     }
 
@@ -90,7 +95,7 @@ public class PizzaController {
 
     // UPDATE
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         // recupero pizza pre modifica tramite id
         Pizza pizza = getPizzaById(id);
         // controllo che il nome o sia lo stesso di prima o che quello nuovo sia unico altrimenti...
@@ -107,15 +112,19 @@ public class PizzaController {
         formPizza.setCreatedAt(pizza.getCreatedAt());
         // salvo le modifiche
         repository.save(formPizza);
+        // aggiungo alert di corretto update come flashAttribute
+        redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, formPizza.getName() + " modificata correttamente."));
         return "redirect:/pizza";
     }
 
     // DELETE
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         // verifichiamo prima se la pizza è presente
         Pizza pizza = getPizzaById(id);
         repository.delete(pizza);
+        // aggiungo alert di corretto delete come flashAttribute
+        redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, pizza.getName() + " rimossa correttamente."));
         return "redirect:/pizza";  // redirect dopo delete di oggetto
     }
 
