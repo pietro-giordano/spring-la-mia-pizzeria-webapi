@@ -5,10 +5,12 @@
             <th:block th:replace="~{/fragments/resources :: head(title='Pizzeria')}"></th:block>
       </head>
 
+      <!-- inserisco variabile isEdit come flag create/edit -->
       <body th:with="isEdit=${pizza.id != null}">
             <div class="container">
                   <h1 th:text="${isEdit ? 'Modifica ' + pizza.name : 'Aggiungi pizza al menù'}" class="text-danger text-center my-3"></h1>
 
+                  <!-- nel form controllo isEdit e in base a quello setto action su create o edit -->
                   <form th:action="@{${isEdit ? '/pizza/edit/' + pizza.id : '/pizza/create'}}" th:object="${pizza}"
                         id="pizza_form" method="POST" enctype="multipart/form-data" class="row">
                         <div class="mb-3 col-6">
