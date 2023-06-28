@@ -45,16 +45,10 @@ public class PizzaController {
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable Integer id) {
         // recupero pizza con id corrispondente
-        Optional<Pizza> pizzaId = repository.findById(id);
-        // se presente la recupero e la passo come attributo col model
-        if (pizzaId.isPresent()) {
-            Pizza pizzaShow = pizzaId.get();
-            model.addAttribute("pizza", pizzaShow);
-            return "/pizza/show";
-        // altrimenti lancio eccezione
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza inesistente");
-        }
+        Pizza pizza = getPizzaById(id);
+        // e la passo tramite model
+        model.addAttribute("pizza", pizza);
+        return "/pizza/show";
     }
 
     // CREATE
@@ -87,7 +81,10 @@ public class PizzaController {
     // EDIT
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("pizza", repository.findById(id).get());
+        // recupero pizza tramite id
+        Pizza pizza = getPizzaById(id);
+        // e lo passo tramite model
+        model.addAttribute("pizza", pizza);
         return "/pizza/edit";
     }
 
@@ -114,5 +111,16 @@ public class PizzaController {
     private boolean isUniqueName(Pizza formPizza) {
         Optional<Pizza> result = repository.findByName(formPizza.getName());
         return result.isEmpty();
+    }
+
+    // metodo per recuperare pizza da database tramite id
+    private Pizza getPizzaById(Integer id) {
+        // recupero pizza con id corrispondente
+        Optional<Pizza> pizzaId = repository.findById(id);
+        // se non esiste lancia eccezione
+        if (pizzaId.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza inesistente");
+        }
+        return pizzaId.get();
     }
 }
