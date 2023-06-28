@@ -97,6 +97,7 @@ public class PizzaController {
         if (bindingResult.hasErrors()) {
             return "/pizza/edit";
         }
+        repository.save(formPizza);
         return "redirect:/pizza";
     }
 
