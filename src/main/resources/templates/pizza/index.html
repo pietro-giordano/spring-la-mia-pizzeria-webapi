@@ -58,7 +58,13 @@
                         </a>
 
                         <form th:action="@{/pizza/delete/{id}(id=${pizza.id})}" method="POST" class="d-inline-block">
-                            <button class="btn btn-danger" type="submit">
+                            <!-- Se non ci sono offerte do la possibilità di eliminare la pizza -->
+                            <button th:if="${pizza.offers.size() == 0}" class="btn btn-danger" type="submit">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <!-- Altrimenti mostro pulsante farlocco. Ps. è solo esercizio di stile, altrimenti cancellando la pizza
+                             cancello anche offerte associate grazie a cascade delete -->
+                            <button th:unless="${pizza.offers.size() == 0}" class="btn btn-danger" disabled>
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
