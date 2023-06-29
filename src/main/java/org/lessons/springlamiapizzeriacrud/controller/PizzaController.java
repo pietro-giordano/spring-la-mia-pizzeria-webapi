@@ -24,7 +24,7 @@ import java.util.Optional;
 public class PizzaController {
 
     @Autowired
-    private PizzaRepository repository;
+    private PizzaRepository pizzaRepository;
 
     // INDEX
     @GetMapping
@@ -33,10 +33,10 @@ public class PizzaController {
         List<Pizza> pizza;
         // se non ho param prendo tutto
         if(search == null || search.isBlank()) {
-            pizza = repository.findAll();
+            pizza = pizzaRepository.findAll();
         } else {
             // altrimenti query personalizzata
-            pizza = repository.findByNameContainingIgnoreCase(search);
+            pizza = pizzaRepository.findByNameContainingIgnoreCase(search);
         }
         model.addAttribute("pizzaList", pizza);
         // mando valore di search per occupare campo di input search
@@ -77,7 +77,7 @@ public class PizzaController {
         // setto data e ora di creazione al momento di creazione stessa
         formPizza.setCreatedAt(LocalDateTime.now());
         // metodo save crea se non trova corrispondenza altrimenti fa update
-        repository.save(formPizza);
+        pizzaRepository.save(formPizza);
         // aggiungo alert di corretto delete come flashAttribute
         redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, formPizza.getName() + " creata correttamente."));
         return "redirect:/pizza";
@@ -111,7 +111,7 @@ public class PizzaController {
         formPizza.setId(pizza.getId());
         formPizza.setCreatedAt(pizza.getCreatedAt());
         // salvo le modifiche
-        repository.save(formPizza);
+        pizzaRepository.save(formPizza);
         // aggiungo alert di corretto update come flashAttribute
         redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, formPizza.getName() + " modificata correttamente."));
         return "redirect:/pizza";
@@ -122,7 +122,7 @@ public class PizzaController {
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         // verifichiamo prima se la pizza è presente
         Pizza pizza = getPizzaById(id);
-        repository.delete(pizza);
+        pizzaRepository.delete(pizza);
         // aggiungo alert di corretto delete come flashAttribute
         redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, pizza.getName() + " rimossa correttamente."));
         return "redirect:/pizza";  // redirect dopo delete di oggetto
@@ -132,14 +132,14 @@ public class PizzaController {
 
     // metodo che verifica presenza in database di un nome di pizza già presente
     private boolean isUniqueName(Pizza formPizza) {
-        Optional<Pizza> result = repository.findByName(formPizza.getName());
+        Optional<Pizza> result = pizzaRepository.findByName(formPizza.getName());
         return result.isEmpty();
     }
 
     // metodo per recuperare pizza da database tramite id
     private Pizza getPizzaById(Integer id) {
         // recupero pizza con id corrispondente
-        Optional<Pizza> pizzaId = repository.findById(id);
+        Optional<Pizza> pizzaId = pizzaRepository.findById(id);
         // se non esiste lancia eccezione
         if (pizzaId.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza inesistente");

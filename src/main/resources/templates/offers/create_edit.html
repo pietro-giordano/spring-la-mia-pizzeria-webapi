@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+      <head>
+            <th:block th:replace="~{/fragments/resources :: head(title='Pizzeria')}"></th:block>
+      </head>
+
+      <!-- inserisco variabile isEdit come flag create/edit -->
+      <body th:with="isEdit=${offer.id != null}">
+            <div class="container">
+                  <h1 th:text="${isEdit ? 'Modifica ' + offer.title : 'Aggiungi offerta'}" class="text-danger text-center my-3"></h1>
+
+                  <!-- nel form controllo isEdit e in base a quello setto action su create o edit -->
+                  <form th:action="@{${isEdit ? '/offers/edit/' + offer.id : '/offers/create'}}" th:object="${offer}"
+                        id="offer_form" method="POST" class="row">
+
+                        <!-- input nascosto per inviare anche pizza -->
+                        <input type="hidden" th:field="*{pizza}">
+
+                        <div class="mb-3 col-6">
+                              <label for="title" class="form-label bg-warning p-1 rounded">Nome offerta</label>
+                              <input type="text" class="form-control" id="title" th:field="*{title}"
+                                    th:errorClass="is-invalid">
+                              <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                                    <ul>
+                                          <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+                                    </ul>
+                              </div>
+                        </div>
+                        <div class="mb-3 col-6">
+                              <label for="startDate" class="form-label bg-warning p-1 rounded">Data inizio</label>
+                              <input type="date" class="form-control" id="startDate" th:field="*{startDate}"
+                                    th:errorClass="is-invalid">
+                              <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+                                    <ul>
+                                          <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+                                    </ul>
+                              </div>
+                        </div>
+                        <div class="mb-3 col-6">
+                              <label for="endDate" class="form-label bg-warning p-1 rounded">Data fine</label>
+                              <input type="date" class="form-control" id="endDate" th:field="*{endDate}"
+                                     th:errorClass="is-invalid">
+                              <div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+                                    <ul>
+                                          <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></li>
+                                    </ul>
+                              </div>
+                        </div>
+                        <div class="mt-3">
+                              <button class="btn btn-success px-3" type="submit">Crea</button>
+                              <a class="btn btn-primary px-3" th:href="@{|/pizza/${offer.pizza.id}|}">Back</a>
+                        </div>
+                  </form>
+            </div>
+      </body>
+
+</html>

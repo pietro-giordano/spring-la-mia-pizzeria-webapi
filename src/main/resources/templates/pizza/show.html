@@ -21,6 +21,20 @@
             <div class="card w-50 mt-5 px-3 py-1 bg-warning" style="width: 18rem;">
                 <div class="card-body">
                     <h4 class="card-title mb-3">Offerte speciali</h4>
+
+                    <!-- alert -->
+                    <div th:if="${message != null}" class="d-flex justify-content-center">
+                        <div class="alert alert-dismissible fade show"
+                             th:classAppend="${#strings.equalsIgnoreCase(message.type, 'SUCCESS')} ? 'alert-success' : 'alert-danger'">
+                            <div th:text="${message.message}"></div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+
+                    <a th:href="@{/offers/create(pizzaId=${pizza.id})}" class="btn btn-success mb-3">
+                        Aggiungi offerta
+                    </a>
+
                     <table class="table table-primary table-striped" th:if="${pizza.offers.size() > 0}">
                         <thead>
                         <tr>
@@ -36,11 +50,11 @@
                             <td th:text="*{#temporals.format(startDate, 'dd/MM/yyyy')}"></td>
                             <td th:text="*{#temporals.format(endDate, 'dd/MM/yyyy')}"></td>
                             <td>
-                                <a href="#" class="btn btn-warning">
+                                <a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-warning">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
 
-                                <form th:action="@{/offer/delete/{id}(id=${offer.id})}" method="POST" class="d-inline-block">
+                                <form th:action="@{/offers/delete/{id}(id=${offer.id})}" method="POST" class="d-inline-block">
                                     <button class="btn btn-danger" type="submit">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
