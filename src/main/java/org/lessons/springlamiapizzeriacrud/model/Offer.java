@@ -2,6 +2,7 @@ package org.lessons.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -17,8 +18,7 @@ public class Offer {
     @Column(nullable = false)
     private String title;
 
-    @NotBlank(message = "Data inizio non può essere vuota o nulla")
-    @Column(nullable = false)
+    @NotNull
     private LocalDate startDate;
     private LocalDate endDate;
 

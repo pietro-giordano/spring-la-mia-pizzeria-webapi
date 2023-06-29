@@ -12,13 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -70,17 +67,19 @@ public class OfferController {
 
     // UPDATE
     @PostMapping("/edit/{id}")
-    public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("borrowing") Offer formOffer, BindingResult bindingResult) {
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("offer") Offer formOffer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // recupero offerta pre modifica tramite id
         Offer offer = getOfferById(id);
         // controllo se ci sono stati errori e nel caso rimando a form create
         if (bindingResult.hasErrors()) {
-            return "/pizza/create_edit";
+            return "/offers/create_edit";
         }
         // aggiungo dati che non modifichiamo nel form
-        formOffer.setId(id);
+        formOffer.setId(offer.getId());
         // salvo modifiche
         offerRepository.save(formOffer);
+        // aggiungo alert di corretta modifica come flashAttribute
+        redirectAttributes.addFlashAttribute("message", new Alert(AlertType.SUCCESS, formOffer.getTitle() + " modificata correttamente."));
         return "redirect:/pizza/" + formOffer.getPizza().getId();
     }
 

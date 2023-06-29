@@ -95,7 +95,7 @@ public class PizzaController {
 
     // UPDATE
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // recupero pizza pre modifica tramite id
         Pizza pizza = getPizzaById(id);
         // controllo che il nome o sia lo stesso di prima o che quello nuovo sia unico altrimenti...
