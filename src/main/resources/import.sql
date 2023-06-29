@@ -3,3 +3,16 @@ INSERT INTO `pizza`(`price`, `created_at`, `description`, `image`, `name`) VALUE
 INSERT INTO `pizza`(`price`, `created_at`, `description`, `image`, `name`) VALUES (10.00,'2023-06-22 16:44:00','La pizza Margherita è la tipica pizza napoletana, condita con pomodoro, mozzarella, basilico fresco, sale e olio','/img/pizza-capricciosa.jpg','Pizza capricciosa')
 INSERT INTO `pizza`(`price`, `created_at`, `description`, `image`, `name`) VALUES (10.00,'2023-06-22 16:44:00','La pizza Margherita è la tipica pizza napoletana, condita con pomodoro, mozzarella, basilico fresco, sale e olio','/img/pizzaquattrostagioni.jpg','Pizza quattro stagioni')
 INSERT INTO `pizza`(`price`, `created_at`, `description`, `image`, `name`) VALUES (10.00,'2023-06-22 16:44:00','La pizza Margherita è la tipica pizza napoletana, condita con pomodoro, mozzarella, basilico fresco, sale e olio','/img/bufalina.jpeg','Pizza bufalina')
+
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','1','2023-06-29','Offerta 1')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','1','2023-06-29','Offerta 2')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','1','2023-06-29','Offerta 3')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','2','2023-06-29','Offerta 1')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','2','2023-06-29','Offerta 2')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','3','2023-06-29','Offerta 1')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','3','2023-06-29','Offerta 2')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','3','2023-06-29','Offerta 3')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','3','2023-06-29','Offerta 4')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','4','2023-06-29','Offerta 1')
+INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','4','2023-06-29','Offerta 2')
+

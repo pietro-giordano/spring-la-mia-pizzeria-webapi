@@ -5,7 +5,8 @@
 </head>
 <body>
     <div class="container text-center">
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-around">
+            <!-- card dettagli pizza -->
             <div class="card w-25 mt-5 p-3 bg-warning" style="width: 18rem;">
                 <img th:src="${pizza.image}" class="card-img-top">
                 <div class="card-body">
@@ -13,6 +14,46 @@
                     <p class="card-text" th:text="${pizza.description}"></p>
                     <p class="card-text" th:text="|Prezzo: ${pizza.price}€|"></p>
                     <a th:href="@{/pizza}" class="btn btn-primary">Back</a>
+                </div>
+            </div>
+
+            <!-- card con lista offerte -->
+            <div class="card w-50 mt-5 px-3 py-1 bg-warning" style="width: 18rem;">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Offerte speciali</h4>
+                    <table class="table table-primary table-striped" th:if="${pizza.offers.size() > 0}">
+                        <thead>
+                        <tr>
+                            <th scope="col">Titolo</th>
+                            <th scope="col">Data inizio</th>
+                            <th scope="col">Data fine</th>
+                            <th scope="col">Azioni</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="offer : ${pizza.offers}" th:object="${offer}">
+                            <td th:text="*{title}"></td>
+                            <td th:text="*{#temporals.format(startDate, 'dd/MM/yyyy')}"></td>
+                            <td th:text="*{#temporals.format(endDate, 'dd/MM/yyyy')}"></td>
+                            <td>
+                                <a href="#" class="btn btn-warning">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
+                                <form th:action="@{/offer/delete/{id}(id=${offer.id})}" method="POST" class="d-inline-block">
+                                    <button class="btn btn-danger" type="submit">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Se lista offerte è vuota mostra questo -->
+                    <div class="alert alert-info" th:unless="${pizza.offers.size() > 0}">
+                        Nessuna offerta disponibile
+                    </div>
                 </div>
             </div>
         </div>

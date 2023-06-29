@@ -34,15 +34,14 @@
                 </div>
             </div>
 
-
-            <!-- Se lista pizze è vuota mostra questo -->
+            <!-- Lista pizze se pizze presenti -->
             <table th:if="${pizzaList.size() > 0}" class="table table-primary table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Details</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Prezzo</th>
+                    <th scope="col">Azioni</th>
                 </tr>
                 </thead>
                 <tbody>
