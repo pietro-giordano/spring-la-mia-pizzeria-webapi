@@ -1,6 +1,7 @@
 package org.lessons.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
@@ -12,7 +13,12 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Il nome non può essere vuoto o nullo")
+    @Column(nullable = false)
     private String title;
+
+    @NotBlank(message = "Data inizio non può essere vuota o nulla")
+    @Column(nullable = false)
     private LocalDate startDate;
     private LocalDate endDate;
 
