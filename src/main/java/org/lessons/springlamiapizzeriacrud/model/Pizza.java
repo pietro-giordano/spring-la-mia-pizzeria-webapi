@@ -27,7 +27,7 @@ public class Pizza {
     private BigDecimal price;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = {CascadeType.REMOVE})
     private List<Offer> offers;
 
     public Integer getId() {
