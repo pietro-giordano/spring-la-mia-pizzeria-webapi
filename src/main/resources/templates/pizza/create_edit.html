@@ -56,6 +56,20 @@
                               </div>
                         </div>
                         -->
+
+                        <!-- categorie -->
+                        <div class="card col-4">
+                              <div class="card-body">
+                                    <span class="bg-warning p-1 rounded">Ingredienti</span>
+                                    <div class="form-check mt-2" th:each="ingredient : ${ingredientList}">
+                                          <input class="form-check-input" type="checkbox" th:value="${ingredient.id}" th:id="|ingredient_${ingredient.id}|"
+                                                 th:field="*{ingredients}">
+                                          <label class="form-check-label" th:for="|ingredient_${ingredient.id}|" th:text="${ingredient.name}">
+                                          </label>
+                                    </div>
+                              </div>
+                        </div>
+
                         <div class="mt-3">
                               <button class="btn btn-success px-3" type="submit">Crea</button>
                               <a class="btn btn-primary px-3" th:href="@{/pizza}">Back</a>

@@ -16,3 +16,27 @@ INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('202
 INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','4','2023-06-29','Offerta 1')
 INSERT INTO `offers`(`end_date`, `pizza_id`, `start_date`, `title`) VALUES ('2023-07-22','4','2023-06-29','Offerta 2')
 
+INSERT INTO `ingredients`(`name`) VALUES ('Farina')
+INSERT INTO `ingredients`(`name`) VALUES ('Pomodoro')
+INSERT INTO `ingredients`(`name`) VALUES ('Mozzarella')
+INSERT INTO `ingredients`(`name`) VALUES ('Prosciutto')
+INSERT INTO `ingredients`(`name`) VALUES ('Funghi')
+
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('1', '1')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('2', '1')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('3', '1')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('4', '1')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('1', '2')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('2', '2')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('1', '3')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('4', '3')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('5', '3')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('1', '4')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('2', '4')
+INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('5', '4')
+
+
+
+
+
+

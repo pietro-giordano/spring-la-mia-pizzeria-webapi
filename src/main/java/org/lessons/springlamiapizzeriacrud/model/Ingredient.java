@@ -15,7 +15,7 @@ public class Ingredient {
 
       @NotBlank(message = "Nome non può essere vuoto o nullo")
       @Column(nullable = false)
-      private String title;
+      private String name;
 
       @ManyToMany(mappedBy = "ingredients")
       private List<Pizza> pizza;
@@ -28,12 +28,12 @@ public class Ingredient {
             this.id = id;
       }
 
-      public String getTitle() {
-            return title;
+      public String getName() {
+            return name;
       }
 
-      public void setTitle(String title) {
-            this.title = title;
+      public void setName(String title) {
+            this.name = title;
       }
 
       public List<Pizza> getPizza() {

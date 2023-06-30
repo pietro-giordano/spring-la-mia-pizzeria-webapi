@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.messages.Alert;
 import org.lessons.springlamiapizzeriacrud.messages.AlertType;
 import org.lessons.springlamiapizzeriacrud.model.Pizza;
+import org.lessons.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.lessons.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository pizzaRepository;
+
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     // INDEX
     @GetMapping
@@ -59,6 +63,8 @@ public class PizzaController {
     public String create(Model model) {
         // passo l'attributo pizza che è un oggetto Pizza vuoto
         model.addAttribute("pizza", new Pizza());
+        // passo la lista degli ingredienti per le checkbox
+        model.addAttribute("ingredientList", ingredientRepository.findAll());
         return "/pizza/create_edit";
     }
 
@@ -72,6 +78,8 @@ public class PizzaController {
         }
         // controllo se ci sono stati errori e nel caso rimando a form create
         if (bindingResult.hasErrors()) {
+            // passo la lista degli ingredienti per le checkbox
+            model.addAttribute("ingredientList", ingredientRepository.findAll());
             return "/pizza/create_edit";
         }
         // setto data e ora di creazione al momento di creazione stessa
@@ -90,12 +98,14 @@ public class PizzaController {
         Pizza pizza = getPizzaById(id);
         // e lo passo tramite model
         model.addAttribute("pizza", pizza);
+        // passo la lista degli ingredienti per le checkbox
+        model.addAttribute("ingredientList", ingredientRepository.findAll());
         return "/pizza/create_edit";
     }
 
     // UPDATE
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         // recupero pizza pre modifica tramite id
         Pizza pizza = getPizzaById(id);
         // controllo che il nome o sia lo stesso di prima o che quello nuovo sia unico altrimenti...
@@ -105,6 +115,8 @@ public class PizzaController {
         }
         // controllo se ci sono stati errori e nel caso rimando a form create
         if (bindingResult.hasErrors()) {
+            // passo la lista degli ingredienti per le checkbox
+            model.addAttribute("ingredientList", ingredientRepository.findAll());
             return "/pizza/create_edit";
         }
         // aggiungo dati che non modifichiamo nel form

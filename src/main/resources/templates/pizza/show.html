@@ -13,7 +13,20 @@
                     <h5 class="card-title" th:text="${pizza.name}"></h5>
                     <p class="card-text" th:text="${pizza.description}"></p>
                     <p class="card-text" th:text="|Prezzo: ${pizza.price}€|"></p>
-                    <a th:href="@{/pizza}" class="btn btn-primary">Back</a>
+
+                    <div>
+                        <h4>Ingredienti</h4>
+                        <ul class="list-group list-group-item-warning" th:if="${pizza.ingredients.size > 0}">
+                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                th:each="ingredient : ${pizza.ingredients}"
+                                th:object="${ingredient}" th:text="*{name}">
+                            </li>
+                        </ul>
+                        <!-- se non ci sono ingredienti -->
+                        <div th:unless="${pizza.ingredients.size > 0}" class="alert alert-info">Nessun ingrediente</div>
+                    </div>
+
+                    <a th:href="@{/pizza}" class="btn btn-primary mt-3">Back</a>
                 </div>
             </div>
 

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+      <head>
+            <th:block th:replace="~{/fragments/resources :: head(title='Pizzeria')}"></th:block>
+      </head>
+
+      <body>
+            <div class="container text-center">
+                  <h1 class="text-danger my-3">Ingredienti</h1>
+
+                  <div class="row">
+                        <div class="col-6">
+                              <div class="card">
+                                    <div class="card-body">
+                                          <ul class="list-group" th:if="${ingredientList.size > 0}">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center"
+                                                      th:each="ingredient : ${ingredientList}"
+                                                      th:object="${ingredient}">
+                                                      <div>
+                                                            <h4 th:text="*{name}"></h4>
+                                                      </div>
+                                                      <div class="d-flex justify-content-between align-items-center">
+                                                            <a th:href="@{/ingredients(edit=*{id})}"
+                                                                  class="btn btn-warning me-1">
+                                                                  <i class="fa-solid fa-pen"></i>
+                                                            </a>
+                                                            <form th:action="@{|/ingredients/delete/*{id}|}"
+                                                                  method="post">
+                                                                  <button class="btn btn-danger" type="submit">
+                                                                        <i class="fa-solid fa-trash-can"></i>
+                                                                  </button>
+                                                            </form>
+                                                      </div>
+                                                </li>
+                                          </ul>
+
+                                          <!-- Se non ci sono pizze mostra questo -->
+                                          <div class="alert alert-info" th:unless="${ingredientList.size() > 0}">
+                                                Nessun ingrediente presente
+                                          </div>
+
+                                          <a th:href="@{/pizza}" class="btn btn-primary mt-3">Back</a>
+                                    </div>
+                              </div>
+                        </div>
+
+                        <div class="col-6">
+                              <div class="card">
+                                    <div class="card-body">
+                                          <form th:action="@{/ingredients/save}" id="ingredient-form" method="post"
+                                                th:object="${ingObj}">
+
+                                                <!-- campo nascosto per mandare id -->
+                                                <input type="hidden" th:field="*{id}">
+
+                                                <div class="mb-2">
+                                                      <label class="form-label" for="name">Nome</label>
+                                                      <input class="form-control" type="text" id="name"
+                                                            th:field="*{name}" th:errorClass="is-invalid">
+                                                      <div th:if="${#fields.hasErrors('name')}"
+                                                            class="invalid-feedback">
+                                                            <ul>
+                                                                  <li th:each="err : ${#fields.errors('name')}"
+                                                                        th:text="${err}">
+                                                                  </li>
+                                                            </ul>
+                                                      </div>
+                                                </div>
+
+                                                <div>
+                                                      <button class="btn btn-success" type="submit">Salva</button>
+                                                      <button class="btn btn-warning" type="reset">Reset</button>
+                                                </div>
+                                          </form>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </body>
+
+</html>
