@@ -56,7 +56,7 @@ public class IngredientController {
                          BindingResult bindingResult, Model model) {
             // verfichiamo se ci sono errori
             if (bindingResult.hasErrors()) {
-                  model.addAttribute("ingredients", ingredientRepository.findAll());
+                  model.addAttribute("ingredientList", ingredientRepository.findAll());
                   return "/ingredients/index";
             }
             ingredientRepository.save(formIngredient);
