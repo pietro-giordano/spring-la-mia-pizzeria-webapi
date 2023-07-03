@@ -42,6 +42,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Questa estensione di Thymeleaf ( ) ci permette di prendere dal context le informazioni sull'utente loggato e di mostrare in modo condizionale elementi del template -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
 
 		<!-- modulo per il riavvio automatico quando faccio modifiche -->
 		<dependency>

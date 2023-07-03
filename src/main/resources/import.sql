@@ -35,8 +35,8 @@ INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('1', '4')
 INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('2', '4')
 INSERT INTO `pizza_ingredient`(`ingredient_id`, `pizza_id`) VALUES ('5', '4')
 
-INSERT INTO `users`(`email`, `password`, `username`) VALUES ('user@gmail.com','user','user')
-INSERT INTO `users`(`email`, `password`, `username`) VALUES ('admin@gmail.com','admin','admin')
+INSERT INTO `users`(`email`, `password`, `username`) VALUES ('user@gmail.com','{noop}user','user')
+INSERT INTO `users`(`email`, `password`, `username`) VALUES ('admin@gmail.com','{noop}admin','admin')
 
 INSERT INTO `roles`(`name`) VALUES ('USER')
 INSERT INTO `roles`(`name`) VALUES ('ADMIN')

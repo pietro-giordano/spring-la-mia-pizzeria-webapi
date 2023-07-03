@@ -20,6 +20,9 @@ public class User {
       @NotNull
       private String password;
 
+      @ManyToMany(fetch = FetchType.EAGER)
+      private Set<Role> roles;
+
       public Integer getId() {
             return id;
       }
@@ -59,7 +62,4 @@ public class User {
       public void setRoles(Set<Role> roles) {
             this.roles = roles;
       }
-
-      @ManyToMany(fetch = FetchType.EAGER)
-      private Set<Role> roles;
 }
