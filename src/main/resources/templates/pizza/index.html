@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="~{/fragments/resources :: head(title='Pizzeria')}"></th:block>
 </head>
@@ -8,8 +8,13 @@
         <div class="row">
             <h1 class="text-danger my-3">Benvenuto in pizzeria tal dei tali</h1>
 
+            <div class="d-flex align-items-center flex-column">
+                <p class="bg-warning p-1">Utente loggato: <span sec:authentication="name"></span></p>
+                <p class="bg-warning p-1">Ruolo: <span sec:authentication="principal.authorities"></span></p>
+            </div>
+
             <div class="d-flex justify-content-center mb-3">
-                <a th:href="@{/pizza/create}" class="btn btn-success me-3">
+                <a th:href="@{/pizza/create}" class="btn btn-success me-3" sec:authorize="hasAuthority('ADMIN')">
                     Aggiungi pizza
                 </a>
 
@@ -24,7 +29,7 @@
                     </div>
                 </form>
 
-                <a th:href="@{/ingredients}" class="btn btn-success ms-3">
+                <a th:href="@{/ingredients}" class="btn btn-success ms-3" sec:authorize="hasAuthority('ADMIN')">
                     Ingredienti
                 </a>
             </div>
@@ -57,18 +62,18 @@
                         <a th:href="@{/pizza/{id}(id=${pizza.id})}" class="btn btn-info">
                             <i class="fa-solid fa-circle-info"></i>
                         </a>
-                        <a th:href="@{/pizza/edit/{id}(id=${pizza.id})}" class="btn btn-warning">
+                        <a th:href="@{/pizza/edit/{id}(id=${pizza.id})}" class="btn btn-warning" sec:authorize="hasAuthority('ADMIN')">
                             <i class="fa-solid fa-pen"></i>
                         </a>
 
                         <form th:action="@{/pizza/delete/{id}(id=${pizza.id})}" method="POST" class="d-inline-block">
                             <!-- Se non ci sono offerte do la possibilità di eliminare la pizza -->
-                            <button th:if="${pizza.offers.size() == 0}" class="btn btn-danger" type="submit">
+                            <button th:if="${pizza.offers.size() == 0}" class="btn btn-danger" type="submit" sec:authorize="hasAuthority('ADMIN')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                             <!-- Altrimenti mostro pulsante farlocco. Ps. è solo esercizio di stile, altrimenti cancellando la pizza
                              cancello anche offerte associate grazie a cascade delete -->
-                            <button th:unless="${pizza.offers.size() == 0}" class="btn btn-danger" disabled>
+                            <button th:unless="${pizza.offers.size() == 0}" class="btn btn-danger" disabled sec:authorize="hasAuthority('ADMIN')">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
