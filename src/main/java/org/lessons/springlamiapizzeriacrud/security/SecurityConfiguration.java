@@ -47,6 +47,8 @@ public class SecurityConfiguration {
                     .requestMatchers("/**").permitAll()
                     .and().formLogin()
                     .and().logout();
+            // disabilitiamo csrf per permettere chiamate api da postman
+            http.csrf().disable();
             return http.build();
       }
 }
