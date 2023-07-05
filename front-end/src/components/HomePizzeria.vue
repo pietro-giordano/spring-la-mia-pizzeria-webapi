@@ -41,7 +41,7 @@ export default {
       <div>
             <h1>Pizzeria</h1>
 
-            <input type="text" v-model="search" @keypress="input()">
+            <input type="text" v-model="search" @keyup="input()">
 
             <ul>
                   <li v-for="pizza in pizzas">

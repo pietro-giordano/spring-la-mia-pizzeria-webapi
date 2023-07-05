@@ -23,7 +23,7 @@ public class PizzaRestController {
       private PizzaRepository pizzaRepository;
 
       @GetMapping
-      public List<Pizza> index(@RequestParam(name = "keyword", required = false) String search) {
+      public List<Pizza> index(@RequestParam(name = "name", required = false) String search) {
             if (search == null || search.isBlank()) {
                   return pizzaRepository.findAll();
             } else {
