@@ -42,7 +42,7 @@ export default {
 
             createPizza() {
                   axios
-                        .post(this.api + 'pizza/create', {
+                        .post(this.api + 'pizza', {
                               name: this.newPizza.name,
                               description: this.newPizza.description,
                               image: this.newPizza.image,
@@ -56,7 +56,7 @@ export default {
 
             deletePizza(index) {
                   axios
-                        .post(this.api + 'pizza/delete/' + this.pizzas[index].id)
+                        .delete(this.api + 'pizza/' + this.pizzas[index].id)
                         .then(response => {
                               console.log(response.data);
                               this.input();
