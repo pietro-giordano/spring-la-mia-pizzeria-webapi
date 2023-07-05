@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,7 @@ public class PizzaRestController {
 
       @PostMapping
       public Pizza create(@Valid @RequestBody Pizza pizza) {
+            pizza.setCreatedAt(LocalDateTime.now());
             return pizzaRepository.save(pizza);
       }
 
