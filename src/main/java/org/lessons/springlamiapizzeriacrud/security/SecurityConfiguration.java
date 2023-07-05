@@ -38,12 +38,13 @@ public class SecurityConfiguration {
       @Bean
       SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
+                    .requestMatchers("/api/**").permitAll()
                     .requestMatchers("/ingredients").hasAuthority("ADMIN")
                     .requestMatchers("/pizza/create").hasAuthority("ADMIN")
                     .requestMatchers("/pizza/edit/**").hasAuthority("ADMIN")
                     .requestMatchers("/pizza/**").hasAnyAuthority("ADMIN", "USER")
                     .requestMatchers("/offers/**").hasAuthority("ADMIN")
-                    .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.POST).permitAll()
                     .requestMatchers("/**").permitAll()
                     .and().formLogin()
                     .and().logout();

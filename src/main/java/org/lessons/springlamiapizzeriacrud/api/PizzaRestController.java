@@ -22,18 +22,22 @@ public class PizzaRestController {
       @Autowired
       private PizzaRepository pizzaRepository;
 
-      /*
       @GetMapping
-      public List<Pizza> index() {
-            return pizzaRepository.findAll();
+      public List<Pizza> index(@RequestParam(name = "keyword", required = false) String search) {
+            if (search == null || search.isBlank()) {
+                  return pizzaRepository.findAll();
+            } else {
+                  return pizzaRepository.findByNameContainingIgnoreCase(search);
+            }
       }
-      */
 
+      /* index con paginazione
       @GetMapping
-      public Page<Pizza> page(@RequestParam(defaultValue = "3") Integer size, @RequestParam(defaultValue = "0") Integer page) {
+      public Page<Pizza> page(@RequestParam(defaultValue = "10") Integer size, @RequestParam(defaultValue = "0") Integer page) {
             Pageable pageable = PageRequest.of(page, size);
             return pizzaRepository.findAll(pageable);
       }
+      */
 
       @GetMapping("{id}")
       public ResponseEntity<Pizza> get(@PathVariable Integer id) {
